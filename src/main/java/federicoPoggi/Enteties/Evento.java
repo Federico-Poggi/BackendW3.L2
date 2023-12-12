@@ -62,4 +62,9 @@ public Evento (String event_title,String event_date,int number_participants_max,
     public void setNumber_participants_max(int number_participants_max) {
         this.number_participants_max = number_participants_max;
     }
+
+    @Override
+    public String toString() {
+        return "evento: " + getEvent_title();
+    }
 }
