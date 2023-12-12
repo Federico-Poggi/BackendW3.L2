@@ -1,16 +1,17 @@
 package federicoPoggi.Enteties;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity //Perche sara un'entita del database
 @Table(name = "eventi")//nome tabella --> database
 
 public class Evento {
-@Id //chiave primari (Obbligatorio)
+
+    /*ATTRIBUTI*/
+
+@Id //chiave primaria (Obbligatorio)
+@GeneratedValue
     private long event_id;
 @Column(name = "event_title")
     private String event_title;
@@ -18,20 +19,24 @@ public class Evento {
     private String event_date;
 @Column(name = "number_max_participants")
     private int number_participants_max;
+@Column(name = "tipo_evento")
+@Enumerated(EnumType.STRING)
+private EventType type;
 
-    public Evento (String event_title,String event_date,int number_participants_max){
+public Evento(){};
+public Evento (String event_title,String event_date,int number_participants_max, EventType eventYpe){
         this.event_title=event_title;
         this.event_date=event_date;
+        this.type= eventYpe;
         this.number_participants_max=number_participants_max;
     }
 
-/*GETTERS AND SETTERS*/
+
+
+    /*GETTERS AND SETTERS*/
+
     public long getEvent_id() {
         return event_id;
-    }
-
-    public void setEvent_id(long event_id) {
-        this.event_id = event_id;
     }
 
     public String getEvent_title() {
