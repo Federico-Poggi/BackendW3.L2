@@ -1,13 +1,15 @@
 package federicoPoggi.EntetyDAO;
 
 import federicoPoggi.Enteties.Evento;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 
+import javax.persistence.*;
+import javax.security.auth.login.Configuration;
 public class EventoDAO {
+
 
     public final EntityManager con;
     public EventoDAO(EntityManager con){this.con=con;}
@@ -34,7 +36,13 @@ public class EventoDAO {
         ev.begin();
         con.remove(event);
         ev.commit();
-
     }
 
+   /* public Evento getEventByName(Evento evento){
+        return getEv;
+    }*/
+
+    public void getNameByName(Evento evento){
+
+    }
 }
