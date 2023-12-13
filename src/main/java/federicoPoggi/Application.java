@@ -18,24 +18,12 @@ public class Application {
     private static final EntityManagerFactory maneger= Persistence.createEntityManagerFactory("Backend-W3.L2");
     public static void main(String[] args) {
         EntityManager con=maneger.createEntityManager(); //responsabile dell'esecuzioni di operazioni con il database
-
         EventoDAO ev=new EventoDAO(con);
+
+
+
+
         Evento event=new Evento("Concerto Queen", "1-05-23", 500000, EventType.PUBBLICO);
-
-        try {
-
-            /*if (event.getEvent_title()==ev.getNameByName(event)){
-                System.out.println("Elemento gia presente");
-                ev.delete(event);
-            }*/
-            ev.delete(event);
-
-        }catch (Exception e){
-            throw new RuntimeException();
-        }
-            ev.getById(event.getEvent_id());
-
-
 
         con.close();
         maneger.close();

@@ -23,6 +23,9 @@ public class Evento {
 @Enumerated(EnumType.STRING)
 private EventType type;
 
+@Embedded
+private Location location; //embeded perche voglio ottenere sia i dati dell'evento sia la location;
+
 public Evento(){};
 public Evento (String event_title,String event_date,int number_participants_max, EventType eventYpe){
         this.event_title=event_title;
