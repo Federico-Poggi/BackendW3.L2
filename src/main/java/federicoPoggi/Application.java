@@ -3,6 +3,10 @@ package federicoPoggi;
 import federicoPoggi.Enteties.EventType;
 import federicoPoggi.Enteties.Evento;
 import federicoPoggi.EntetyDAO.EventoDAO;
+import federicoPoggi.EntetyDAO.LocationDAO;
+import federicoPoggi.EntetyDAO.PartecipationDAO;
+import federicoPoggi.EntetyDAO.PersonDAO;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Parameter;
@@ -19,11 +23,9 @@ public class Application {
     public static void main(String[] args) {
         EntityManager con=maneger.createEntityManager(); //responsabile dell'esecuzioni di operazioni con il database
         EventoDAO ev=new EventoDAO(con);
-
-
-
-
-        Evento event=new Evento("Concerto Queen", "1-05-23", 500000, EventType.PUBBLICO);
+        LocationDAO lo=new LocationDAO(con);
+        PersonDAO pe= new PersonDAO(con);
+        PartecipationDAO par=new PartecipationDAO(con);
 
         con.close();
         maneger.close();

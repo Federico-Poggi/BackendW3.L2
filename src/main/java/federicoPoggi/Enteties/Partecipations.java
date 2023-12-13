@@ -1,6 +1,8 @@
 package federicoPoggi.Enteties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "partecipations")
@@ -12,12 +14,17 @@ public class Partecipations {
     private long partecipation_id;
     @Column(name = "persona")
     private String persona;
-    @Column(name = "evento")
-    private String evento;
-
-    @Column(name = "stao")
+    @Column(name = "state")
     @Enumerated(EnumType.STRING)
     Conferma state;
+
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Evento evento;
+
+    @ManyToMany(mappedBy = "partecipations")
+    private List<Person> people=new ArrayList<>();
+
 
     /*---COSTRUTTORI---*/
 

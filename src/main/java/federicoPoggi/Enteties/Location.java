@@ -1,18 +1,23 @@
 package federicoPoggi.Enteties;
 
 import javax.persistence.*;
-import java.security.PublicKey;
+import java.util.ArrayList;
+import java.util.List;
 
-@Embeddable //non entity perche i cambi sono definiti dentro Event
+@Entity
 @Table(name = "location")
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_location;
-    @Column(name = "nome")
+
+    @Column(name = "name")
     private String name;
-    @Column(name = "citta")
+    @Column(name = "city")
     private String city;
+
+    @OneToMany(mappedBy = "event_id")
+    private List<Evento> evento=new ArrayList<>();
 
     /*---COSTRUTTORI---*/
     public Location(){}

@@ -67,7 +67,7 @@ public class EventoDAO {
 
         return evento.getEvent_title();
     }
-    public List<Evento> getEventByName(Evento eventTitle){
+    public List<Evento> getEventByName(String eventTitle){
         EntityTransaction ev= con.getTransaction();
         ev.begin();
         CriteriaBuilder criteriaBuilder=con.getCriteriaBuilder();
@@ -75,7 +75,7 @@ public class EventoDAO {
 
         Root<Evento> eventoRoot= criteriaQuery.from(Evento.class);
 
-        criteriaQuery.select(eventoRoot.get("event_title")).equals(eventTitle.getEvent_title());
+        criteriaQuery.select(eventoRoot.get("event_title")).equals(eventTitle);
         CriteriaQuery<Evento> select=criteriaQuery.select(eventoRoot);
 
         TypedQuery<Evento> query=con.createQuery(select);

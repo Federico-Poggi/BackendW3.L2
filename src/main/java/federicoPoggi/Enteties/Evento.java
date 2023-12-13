@@ -2,6 +2,8 @@ package federicoPoggi.Enteties;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity //Perche sara un'entita del database
 @Table(name = "eventi")//nome tabella --> database
@@ -23,15 +25,25 @@ public class Evento {
 @Enumerated(EnumType.STRING)
 private EventType type;
 
-@Embedded
-private Location location; //embeded perche voglio ottenere sia i dati dell'evento sia la location;
+@OneToMany(mappedBy = "partecipation_id")//perche un evento puo avere tante partecipazioni
+private List<Partecipations> partecipations=new ArrayList<>();
 
-public Evento(){};
-public Evento (String event_title,String event_date,int number_participants_max, EventType eventYpe){
+@ManyToOne
+@JoinColumn(name = "id_location")
+private Location location;
+
+public Evento(Location location){
+    this.location = location;
+};
+public Evento (String event_title, String event_date, int number_participants_max, EventType eventYpe){
         this.event_title=event_title;
         this.event_date=event_date;
         this.type= eventYpe;
         this.number_participants_max=number_participants_max;
+}
+
+public Evento() {
+
     }
 
 

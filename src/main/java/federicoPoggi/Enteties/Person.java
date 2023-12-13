@@ -2,7 +2,9 @@ package federicoPoggi.Enteties;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -29,6 +31,13 @@ public class Person {
     @Column(name = "genres")
     private char Genre;
 
+   @ManyToMany
+   @JoinTable(
+           name = "person_partecipation",
+           joinColumns = @JoinColumn(name = "person_id"),
+           inverseJoinColumns = @JoinColumn(name = "partecipation_id")
+   )
+   private List<Partecipations> partecipations=new ArrayList<>();
 
     /*---COSTRUTTORI---*/
     public Person(){}
