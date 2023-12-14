@@ -30,14 +30,13 @@ public class Person {
 
     @Column(name = "genres")
     private char Genre;
-
-   @ManyToMany
+    @ManyToMany
    @JoinTable(
            name = "person_partecipation",
            joinColumns = @JoinColumn(name = "person_id"),
            inverseJoinColumns = @JoinColumn(name = "partecipation_id")
    )
-   private List<Partecipations> partecipations=new ArrayList<>();
+   private List<Person> personList=new ArrayList<>();
 
     /*---COSTRUTTORI---*/
     public Person(){}

@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity //Perche sara un'entita del database
-@Table(name = "eventi")//nome tabella --> database
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@DiscriminatorColumn(name="tipo_evento")
 
 public class Evento {
 
@@ -16,35 +17,36 @@ public class Evento {
 @GeneratedValue
     private long event_id;
 @Column(name = "event_title")
-    private String event_title;
+    protected String event_title;
 @Column(name = "event_date")
-    private String event_date;
+    protected String event_date;
 @Column(name = "number_max_participants")
-    private int number_participants_max;
+    protected int number_participants_max;
 @Column(name = "tipo_evento")
 @Enumerated(EnumType.STRING)
-private EventType type;
+protected EventType type;
 
 @OneToMany(mappedBy = "partecipation_id")//perche un evento puo avere tante partecipazioni
-private List<Partecipations> partecipations=new ArrayList<>();
+protected List<Partecipations> partecipations=new ArrayList<>();
 
 @ManyToOne
 @JoinColumn(name = "id_location")
-private Location location;
+protected Location location;
 
-public Evento(Location location){
-    this.location = location;
-};
-public Evento (String event_title, String event_date, int number_participants_max, EventType eventYpe){
-        this.event_title=event_title;
-        this.event_date=event_date;
-        this.type= eventYpe;
-        this.number_participants_max=number_participants_max;
-}
+    public Evento(Location location) {
+        this.location=location;
+    }
 
-public Evento() {}
+    public Evento(String eventTitle, String eventDate, int numberParticipantsMax, EventType eventYpe) {
+        this.event_title=eventTitle;
+        this.event_date=eventDate;
+        this.number_participants_max=numberParticipantsMax;
+        this.type=eventYpe;
+    }
 
-
+    public Evento() {
+        
+    }
 
     /*GETTERS AND SETTERS*/
 
@@ -96,4 +98,5 @@ public Evento() {}
     public String toString() {
         return "evento: " + getEvent_title();
     }
+
 }
