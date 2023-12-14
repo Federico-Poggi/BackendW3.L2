@@ -3,10 +3,11 @@ package federicoPoggi.Enteties;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "football_match")
-public class FootballMatch extends Evento{
+public class FootballMatch extends Events {
     @Column(name = "home_team")
     String homeTeam;
     @Column(name = "visiting_team")
@@ -23,14 +24,10 @@ public class FootballMatch extends Evento{
         this.location=location;
     }
 
-    public FootballMatch(String event_title, String event_date, int number_participants_max,
+    public FootballMatch(String event_title, int event_date, int number_participants_max,
                          EventType eventYpe, String homeTeam, String visitingTeam, String winners,
                          int goalHomeTeam, int goalVisitingTeam)
     {
-        this.event_title=event_title;
-        this.event_date=event_date;
-        this.number_participants_max=number_participants_max;
-        this.type=eventYpe;
         this.homeTeam = homeTeam;
         this.visitingTeam = visitingTeam;
         this.winners = winners;
@@ -40,6 +37,9 @@ public class FootballMatch extends Evento{
 
     public FootballMatch(String event_title, String event_date, int number_participants_max, EventType eventYpe) {
         super(event_title,event_date,number_participants_max,eventYpe);
+    }
+
+    public FootballMatch() {
     }
 
 

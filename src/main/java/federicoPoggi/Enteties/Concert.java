@@ -1,12 +1,11 @@
 package federicoPoggi.Enteties;
 
-import org.hibernate.annotations.JoinColumnOrFormula;
-
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "concerts")
-public class Concert extends Evento{
+public class Concert extends Events {
 
 @Column(name = "genere")
 @Enumerated(EnumType.STRING)
@@ -19,8 +18,8 @@ boolean streaming;
     }
 
     public Concert(String eventTitle, String eventDate, int numberParticipantsMax,
-                   EventType eventYpe,MusicGen gen, boolean streaming) {
-        super(eventTitle, eventDate, numberParticipantsMax, eventYpe);
+                   EventType eventType, MusicGen gen, boolean streaming) {
+        super(eventTitle, eventDate, numberParticipantsMax, eventType);
         this.genere=gen;
         this.streaming=streaming;
     }

@@ -1,8 +1,6 @@
 package federicoPoggi.Enteties;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "partecipations")
@@ -20,7 +18,7 @@ public class Partecipations {
 
     @ManyToOne
     @JoinColumn(name = "event_id")
-    private Evento evento;
+    private Events evento;
 
     /*@ManyToMany(mappedBy = "partecipations_id")
     private List<Person> people=new ArrayList<>();*/

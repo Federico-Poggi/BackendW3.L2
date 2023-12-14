@@ -38,6 +38,9 @@ public class Person {
    )
    private List<Person> personList=new ArrayList<>();
 
+    @OneToMany(mappedBy = "person_id")
+    private List<Person> persone=new ArrayList<>();
+
     /*---COSTRUTTORI---*/
     public Person(){}
 }

@@ -1,12 +1,14 @@
 package federicoPoggi;
-import federicoPoggi.Enteties.*;
+import federicoPoggi.Enteties.AthleticCompetition;
+import federicoPoggi.Enteties.EventType;
+import federicoPoggi.Enteties.Location;
 import federicoPoggi.EntetyDAO.*;
 import federicoPoggi.Exception.NotInDataBaseException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
+import java.time.LocalDate;
 
 
 public class Application {
@@ -18,13 +20,13 @@ public class Application {
     public static void main(String[] args) throws NotInDataBaseException {
 
         EntityManager con=maneger.createEntityManager(); //responsabile dell'esecuzioni di operazioni con il database
-        EventoDAO ev=new EventoDAO(con);
-        FootballMatch footballMatch=new FootballMatch("Inter-Milan", "21-07-24", 500000, EventType.PUBBLICO);
-        /*Concert concert= new Concert("Concerto Memorial Freddy Marcury", "21-07-24", 500000,
-                                        EventType.PUBBLICO, MusicGen.ROCK,true);
-        Location location=new Location("San Siro","Milano");*/
-
-        ev.delete("Concerto Memorial Freddy Marcury");
+        EventsDAO ev=new EventsDAO(con);
+        LocationDAO loc=new LocationDAO(con);
+        Location lo=new Location("Asfalto Nero","Venezia");
+        AthleticCompetition atl=new AthleticCompetition(lo);
+        AthleticCompetition at= new AthleticCompetition("Gara di triatlon","23-10-2024" ,530000, EventType.PRIVATO,lo);
+        loc.save(lo);
+        ev.save(at);
         con.close();
         maneger.close();
     }

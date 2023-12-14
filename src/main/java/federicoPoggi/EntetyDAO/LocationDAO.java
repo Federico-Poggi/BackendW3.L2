@@ -2,8 +2,10 @@ package federicoPoggi.EntetyDAO;
 
 import federicoPoggi.Enteties.Location;
 import federicoPoggi.Exception.NotInDataBaseException;
+import org.hibernate.Transaction;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.List;
 import java.util.Scanner;
@@ -14,13 +16,14 @@ public class LocationDAO {
 
     private String locationName;
     private Location location=new Location();
-    public void save(){
+    public void save(Location loc){
         Scanner scan=new Scanner(System.in);
-        System.out.println("Inserisci nome location evento: ");
-        location.setName(scan.nextLine());
-        System.out.println("Inserisci città evento: ");
-        location.setCity(scan.nextLine());
-        con.persist(location);
+        EntityTransaction transaction=con.getTransaction();
+        transaction.begin();
+
+        con.persist(loc);
+
+        transaction.commit();
     }
 
 

@@ -1,15 +1,21 @@
 package federicoPoggi.Enteties;
 
 
+import org.hibernate.type.CalendarDateType;
+
 import javax.persistence.*;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Entity //Perche sara un'entita del database
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name="tipo_evento")
 
-public class Evento {
+public class Events {
 
     /*ATTRIBUTI*/
 
@@ -19,7 +25,7 @@ public class Evento {
 @Column(name = "event_title")
     protected String event_title;
 @Column(name = "event_date")
-    protected String event_date;
+    protected LocalDate event_date;
 @Column(name = "number_max_participants")
     protected int number_participants_max;
 @Column(name = "tipo_evento")
@@ -33,18 +39,18 @@ protected List<Partecipations> partecipations=new ArrayList<>();
 @JoinColumn(name = "id_location")
 protected Location location;
 
-    public Evento(Location location) {
+    public Events(Location location) {
         this.location=location;
     }
 
-    public Evento(String eventTitle, String eventDate, int numberParticipantsMax, EventType eventYpe) {
+    public Events(String eventTitle, String eventDate, int numberParticipantsMax, EventType eventYpe) {
         this.event_title=eventTitle;
-        this.event_date=eventDate;
+        this.event_date= setEvent_date(eventDate);
         this.number_participants_max=numberParticipantsMax;
         this.type=eventYpe;
     }
 
-    public Evento() {
+    public Events() {
         
     }
 
@@ -70,12 +76,14 @@ protected Location location;
         this.event_title = event_title;
     }
 
-    public String getEvent_date() {
+    public LocalDate getEvent_date() {
         return event_date;
     }
 
-    public void setEvent_date(String event_date) {
-        this.event_date = event_date;
+
+    public LocalDate setEvent_date(String event_date) {
+        LocalDate loc= LocalDate.parse(event_date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+       return this.event_date = loc;
     }
 
     public int getNumber_participants_max() {
