@@ -2,25 +2,27 @@ package federicoPoggi.Enteties;
 
 import org.hibernate.annotations.JoinColumnOrFormula;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "concerts")
 public class Concert extends Evento{
 
 @Column(name = "genere")
+@Enumerated(EnumType.STRING)
 private MusicGen genere;
 
 @Column(name = "streaming", nullable = false)
 boolean streaming;
     public Concert(Location location) {
-        super(location);
+        this.location=location;
     }
 
-    public Concert(String eventTitle, String eventDate, int numberParticipantsMax, EventType eventYpe) {
+    public Concert(String eventTitle, String eventDate, int numberParticipantsMax,
+                   EventType eventYpe,MusicGen gen, boolean streaming) {
         super(eventTitle, eventDate, numberParticipantsMax, eventYpe);
+        this.genere=gen;
+        this.streaming=streaming;
     }
 
     public Concert() {

@@ -1,6 +1,5 @@
 package federicoPoggi;
-import federicoPoggi.Enteties.EventType;
-import federicoPoggi.Enteties.FootballMatch;
+import federicoPoggi.Enteties.*;
 import federicoPoggi.EntetyDAO.*;
 import federicoPoggi.Exception.NotInDataBaseException;
 
@@ -21,9 +20,11 @@ public class Application {
         EntityManager con=maneger.createEntityManager(); //responsabile dell'esecuzioni di operazioni con il database
         EventoDAO ev=new EventoDAO(con);
         FootballMatch footballMatch=new FootballMatch("Inter-Milan", "21-07-24", 500000, EventType.PUBBLICO);
-        ev.save(footballMatch);
+        /*Concert concert= new Concert("Concerto Memorial Freddy Marcury", "21-07-24", 500000,
+                                        EventType.PUBBLICO, MusicGen.ROCK,true);
+        Location location=new Location("San Siro","Milano");*/
 
-
+        ev.delete("Concerto Memorial Freddy Marcury");
         con.close();
         maneger.close();
     }
