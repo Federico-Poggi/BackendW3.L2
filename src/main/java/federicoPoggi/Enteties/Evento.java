@@ -42,13 +42,19 @@ public Evento (String event_title, String event_date, int number_participants_ma
         this.number_participants_max=number_participants_max;
 }
 
-public Evento() {
-
-    }
+public Evento() {}
 
 
 
     /*GETTERS AND SETTERS*/
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
     public long getEvent_id() {
         return event_id;
@@ -72,6 +78,14 @@ public Evento() {
 
     public int getNumber_participants_max() {
         return number_participants_max;
+    }
+
+    public EventType getType() {
+        return type;
+    }
+
+    public void setType(EventType type) {
+        this.type = type;
     }
 
     public void setNumber_participants_max(int number_participants_max) {

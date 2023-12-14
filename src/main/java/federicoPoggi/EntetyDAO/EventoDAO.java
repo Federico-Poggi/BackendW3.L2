@@ -1,86 +1,107 @@
 package federicoPoggi.EntetyDAO;
 
+import federicoPoggi.Enteties.EventType;
 import federicoPoggi.Enteties.Evento;
-
-
-
+import federicoPoggi.Enteties.Location;
+import federicoPoggi.Exception.NotInDataBaseException;
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.util.List;
+import java.util.Scanner;
 
 public class EventoDAO {
-
-
     public final EntityManager con;
     public EventoDAO(EntityManager con){this.con=con;}
 
-    public void save(Evento event){
-       EntityTransaction transaction = con.getTransaction(); //avvio transazione
 
+    public void save() throws NotInDataBaseException {
+        Scanner scan=new Scanner(System.in);
+        EntityTransaction transaction = con.getTransaction(); //avvio transazione
         transaction.begin();
+        boolean finish=false;
+        do{
+            //inserimento dati dall'utente
+            String yes="YES";
+            String no="NO";
+            Evento event= new Evento();
+            Location locev= new Location("Padova Fiere","Padova");
+            con.persist(locev);
+            event.setLocation(locev);
+            /*----------------------------------------------------*/
+            System.out.println("Inserisci nome evento: ");
+            event.setEvent_title(scan.nextLine());
+            /*----------------------------------------------------*/
+            System.out.println("Quando: ");
+            event.setEvent_date(scan.nextLine());
+            /*----------------------------------------------------*/
+            System.out.println("Numero massimo di partecipanti: ");
+            event.setNumber_participants_max(scan.nextInt());
+            /*----------------------------------------------------*/
+            System.out.println("Inserisci tipo evento: ");
 
-        con.persist(event);
+            String tipo = scan.nextLine().toUpperCase();
 
-        transaction.commit();
+            switch(tipo){
+                case "PUBBLICO":
+                    event.setType(EventType.PUBBLICO);
+                case "PRIVATO":
+                    event.setType(EventType.PRIVATO);
+            }
+            /*----------------------------------------------------*/
+            con.persist(event);
+            /*----------------------------------------------------*/
+            System.out.println("Aggiungere altri eventi?");
+            String userIn= scan.nextLine().toUpperCase();
+            /*----------------------------------------------------*/
+            if (userIn.compareTo(yes)==0){
+                System.out.println(event.getEvent_title() +  " è stato Aggiunto alla lista");
+                finish=true;
+            }
 
-        System.out.println(event.getEvent_title() +  " è stato Aggiunto alla lista");
+            transaction.commit();
+        }while(finish);
+
     };
+
+
+
+
 
     public Evento getById(long id_event){
         Evento getEv=con.find(Evento.class, id_event);
         return getEv;
     };
 
-    public void delete(Evento event){
-        List<Evento> eventFind=this.getEventByName(event);
+
+
+
+    public void delete(String eventTitle){
+        Query queryDelete=con.createQuery("DELETE Evento WHERE event_title = :eventTitle");
         EntityTransaction ev= con.getTransaction();
-
-        if (!eventFind.isEmpty()){
+        try{
             ev.begin();
-
-            Evento e = getById(event.getEvent_id());
-
-            con.remove(e);
-
+            queryDelete.setParameter("eventTitle", eventTitle);
+            int numeroEveEliminati= queryDelete.executeUpdate();
+            System.out.println(numeroEveEliminati);
+            if(numeroEveEliminati==0){
+                System.out.println("Il nome"+" "+ "'"+eventTitle+"'" +" non esiste:\n -Terminare operazione (PRESS T)\n -Reinserire nome (PRESS R)");
+            }
             ev.commit();
-        }else{
-            System.out.println("Evento non trovato o gia cancellato");
+        }catch (Exception e){
+            throw new RuntimeException("Non valido");
+        }finally {
+            con.close();
         }
 
+
+
+
+
+
+
     }
 
 
-    public String getNameByName(Evento evento){
-        EntityTransaction ev= con.getTransaction();
-        ev.begin();
-        CriteriaBuilder criteriaBuilder=con.getCriteriaBuilder();
-        CriteriaQuery<Evento> criteriaQuery=criteriaBuilder.createQuery(Evento.class);
 
-        Root<Evento> eventoRoot= criteriaQuery.from(Evento.class);
 
-        criteriaQuery.select(eventoRoot.get("event_title"));
-        CriteriaQuery<Evento> select=criteriaQuery.select(eventoRoot);
-
-        TypedQuery<Evento> query=con.createQuery(select);
-
-        return evento.getEvent_title();
-    }
-    public List<Evento> getEventByName(String eventTitle){
-        EntityTransaction ev= con.getTransaction();
-        ev.begin();
-        CriteriaBuilder criteriaBuilder=con.getCriteriaBuilder();
-        CriteriaQuery<Evento> criteriaQuery=criteriaBuilder.createQuery(Evento.class);
-
-        Root<Evento> eventoRoot= criteriaQuery.from(Evento.class);
-
-        criteriaQuery.select(eventoRoot.get("event_title")).equals(eventTitle);
-        CriteriaQuery<Evento> select=criteriaQuery.select(eventoRoot);
-
-        TypedQuery<Evento> query=con.createQuery(select);
-        return query.getResultList();
-    }
 
 
 }
