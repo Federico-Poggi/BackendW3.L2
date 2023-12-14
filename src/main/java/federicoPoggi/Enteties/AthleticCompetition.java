@@ -8,8 +8,8 @@ import java.util.*;
 @Entity
 @Table(name = "athletic_competitions")
 public class AthleticCompetition extends Evento {
-    @OneToMany(mappedBy = "partecipations_id")
-    List<Partecipations> personList=new ArrayList<>();
+    @OneToMany(mappedBy = "person_id")
+    List<Person> personList=new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "winner_id")
@@ -30,11 +30,11 @@ public class AthleticCompetition extends Evento {
 
     /*----GETTERS AND SETTERS----*/
 
-    public List<Partecipations> getPersonList() {
+    public List<Person> getPersonList() {
         return personList;
     }
 
-    public void setPersonList(List<Partecipations> personList) {
+    public void setPersonList(List<Person> personList) {
         this.personList = personList;
     }
 

@@ -22,8 +22,8 @@ public class Partecipations {
     @JoinColumn(name = "event_id")
     private Evento evento;
 
-    @ManyToMany(mappedBy = "partecipations")
-    private List<Person> people=new ArrayList<>();
+    /*@ManyToMany(mappedBy = "partecipations_id")
+    private List<Person> people=new ArrayList<>();*/
 
 
     /*---COSTRUTTORI---*/
